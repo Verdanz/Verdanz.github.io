@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerardo Verdad | Senior QA Automation Engineer</title>
+  <meta name="description" content="Senior QA Automation Engineer specializing in Playwright, TypeScript, Selenium, CI/CD, API testing, and AI-assisted QA workflows." />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --card: #1f2937;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 12px 30px rgba(0,0,0,0.25);
+      --max: 1050px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.8);
+      border-bottom: 1px solid var(--border);
+      z-index: 20;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .panel, .card {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 34px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #7dd3fc;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3 { line-height: 1.15; margin: 0 0 12px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 18px; }
+    h3 { font-size: 1.05rem; }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #082f49;
+      border-color: transparent;
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 24px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    section {
+      padding: 26px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      padding: 22px;
+    }
+
+    .item-meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+    }
+
+    ul.clean {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .highlight {
+      color: #86efac;
+      font-weight: 700;
+    }
+
+    .footer {
+      padding: 40px 0 60px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .panel { padding: 24px; }
+      .stats { padding: 20px; }
+      .nav-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Gerardo Verdad</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="panel">
+        <div class="eyebrow">Senior QA Automation Engineer</div>
+        <h1>Building reliable quality systems for modern web, API, and CI/CD workflows.</h1>
+        <p class="lead">
+          I’m a Senior QA Automation Engineer with 8+ years of experience designing scalable test automation,
+          strengthening release confidence, and improving engineering quality through Playwright, TypeScript,
+          Selenium, API validation, and AI-assisted QA workflows.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:verdad.gerardo@gmail.com">Email Me</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn btn-secondary" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <aside class="panel stats">
+        <div class="stat">
+          <strong>8+ yrs</strong>
+          <span>QA and test automation experience</span>
+        </div>
+        <div class="stat">
+          <strong>Playwright</strong>
+          <span>Modern UI and API automation focus</span>
+        </div>
+        <div class="stat">
+          <strong>CI/CD</strong>
+          <span>GitHub Actions, pipelines, reporting</span>
+        </div>
+        <div class="stat">
+          <strong>AI QA</strong>
+          <span>LLM-assisted workflows and validation</span>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>About</h2>
+        </div>
+        <div class="card">
+          <p>
+            I specialize in end-to-end quality engineering across web applications, APIs, distributed systems,
+            and automation frameworks. My background includes Playwright with TypeScript, Selenium with Ruby,
+            CI/CD integration, accessibility validation, test reporting, exploratory testing, and release readiness.
+          </p>
+          <p>
+            I enjoy creating maintainable frameworks, improving automation coverage, and partnering closely with
+            developers, product teams, and stakeholders to reduce risk and ship with confidence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <h2>Experience</h2>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Senior QA Automation Engineer</h3>
+            <div class="item-meta">Add company name here • Add dates here</div>
+            <ul class="clean">
+              <li>Designed and maintained automation coverage for UI, API, and regression testing.</li>
+              <li>Improved release confidence by integrating automated checks into CI/CD workflows.</li>
+              <li>Partnered with developers and product teams to investigate defects and strengthen quality standards.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>QA Automation Engineer</h3>
+            <div class="item-meta">Add company name here • Add dates here</div>
+            <ul class="clean">
+              <li>Built reusable automation components using Playwright, Selenium, TypeScript, and Ruby.</li>
+              <li>Validated APIs, database workflows, and business-critical end-to-end scenarios.</li>
+              <li>Supported manual and exploratory testing to uncover edge cases and usability issues.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured Projects</h2>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Playwright + TypeScript Framework</h3>
+            <p>Modernized test automation with maintainable architecture, reusable helpers, and strong reporting support.</p>
+            <p class="highlight">UI automation • API checks • reporting • maintainability</p>
+          </article>
+          <article class="card">
+            <h3>CI/CD Test Pipeline Integration</h3>
+            <p>Integrated automated suites into pipeline workflows to improve release readiness and feedback speed.</p>
+            <p class="highlight">GitHub Actions • quality gates • artifacts • notifications</p>
+          </article>
+          <article class="card">
+            <h3>AI-Assisted QA Workflow</h3>
+            <p>Used LLMs to accelerate test ideation, strengthen acceptance criteria, and improve defect discovery.</p>
+            <p class="highlight">LLMs • adversarial testing • faster test design</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <h2>Skills</h2>
+        </div>
+        <div class="card tag-wrap">
+          <span class="tag">Playwright</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Selenium</span>
+          <span class="tag">Ruby</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">API Testing</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Accessibility Testing</span>
+          <span class="tag">Allure / HTML Reports</span>
+          <span class="tag">Exploratory Testing</span>
+          <span class="tag">AI-Assisted QA</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2>
+        </div>
+        <div class="card">
+          <p><strong>Email:</strong> <a href="mailto:verdad.gerardo@gmail.com">verdad.gerardo@gmail.com</a></p>
+          <p><strong>Location:</strong> Crowley, Texas</p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">Add your LinkedIn URL</a></p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/" target="_blank" rel="noreferrer">Add your GitHub URL</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Gerardo Verdad. Built with HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+</body>
+</html>
