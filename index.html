@@ -1,695 +1,926 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerardo Verdad | Senior QA Automation Engineer</title>
-  <meta
-    name="description"
-    content="Senior QA Automation Engineer with 8+ years of experience in Playwright, TypeScript, Selenium, API testing, CI/CD, accessibility, distributed systems, and AI-assisted QA workflows."
-  />
-  <style>
-    :root {
-      --bg: #07111f;
-      --bg-2: #0b1325;
-      --panel: rgba(10, 19, 37, 0.72);
-      --card: rgba(15, 23, 42, 0.78);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #67e8f9;
-      --accent-2: #a78bfa;
-      --accent-3: #34d399;
-      --border: rgba(255,255,255,0.1);
-      --shadow: 0 18px 60px rgba(0,0,0,0.32);
-      --max: 1120px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      line-height: 1.6;
-      background:
-        radial-gradient(circle at top left, rgba(103, 232, 249, 0.14), transparent 26%),
-        radial-gradient(circle at 85% 15%, rgba(167, 139, 250, 0.14), transparent 22%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 85%);
-      z-index: -1;
-    }
-
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: none; }
-
-    .container {
-      width: min(92%, var(--max));
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(16px);
-      background: rgba(7, 17, 31, 0.65);
-      border-bottom: 1px solid var(--border);
-      z-index: 20;
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-
-    .brand {
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      position: relative;
-    }
-
-    .brand::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transform: scaleX(0.45);
-      transform-origin: left;
-      opacity: 0.85;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      transition: color 0.25s ease, transform 0.25s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-
-    .hero {
-      padding: 84px 0 42px;
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.45fr 0.95fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .panel, .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .panel {
-      padding: 34px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before, .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(103, 232, 249, 0.35), rgba(167, 139, 250, 0.18), transparent 55%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 7px 13px;
-      border-radius: 999px;
-      background: rgba(103, 232, 249, 0.1);
-      color: #a5f3fc;
-      font-size: 0.84rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      border: 1px solid rgba(103, 232, 249, 0.18);
-      animation: floatTag 4s ease-in-out infinite;
-    }
-
-    h1, h2, h3, h4 {
-      line-height: 1.15;
-      margin: 0 0 12px;
-    }
-
-    h1 {
-      font-size: clamp(2.25rem, 5vw, 4.1rem);
-      letter-spacing: -0.03em;
-    }
-
-    h2 {
-      font-size: clamp(1.45rem, 3vw, 2rem);
-      margin-bottom: 18px;
-    }
-
-    h3 {
-      font-size: 1.05rem;
-    }
-
-    .lead {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 65ch;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      font-weight: 700;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 26px rgba(0,0,0,0.22);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #93c5fd);
-      color: #082f49;
-      border-color: transparent;
-    }
-
-    .btn-secondary {
-      color: var(--text);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(103, 232, 249, 0.35);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      padding: 24px;
-      position: relative;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.035);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px;
-      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
-    }
-
-    .stat:hover,
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(103, 232, 249, 0.28);
-      background: rgba(255,255,255,0.05);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.7rem;
-      margin-bottom: 4px;
-    }
-
-    section {
-      padding: 28px 0;
-      opacity: 0;
-      transform: translateY(28px);
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    section:nth-of-type(2) { animation-delay: 0.08s; }
-    section:nth-of-type(3) { animation-delay: 0.16s; }
-    section:nth-of-type(4) { animation-delay: 0.24s; }
-    section:nth-of-type(5) { animation-delay: 0.32s; }
-    section:nth-of-type(6) { animation-delay: 0.4s; }
-    section:nth-of-type(7) { animation-delay: 0.48s; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .grid-2, .grid-3 {
-      display: grid;
-      gap: 18px;
-    }
-
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    .card {
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      right: -60px;
-      top: -70px;
-      background: radial-gradient(circle, rgba(103, 232, 249, 0.14), transparent 68%);
-      pointer-events: none;
-    }
-
-    .item-meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 10px;
-    }
-
-    ul.clean {
-      padding-left: 18px;
-      margin: 10px 0 0;
-    }
-
-    .tag-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tag {
-      padding: 9px 13px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.9rem;
-      transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-    }
-
-    .tag:hover {
-      transform: translateY(-2px);
-      border-color: rgba(167, 139, 250, 0.35);
-      color: var(--text);
-    }
-
-    .highlight {
-      color: #86efac;
-      font-weight: 700;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 18px;
-    }
-
-    .timeline .card {
-      padding: 24px;
-    }
-
-    .kicker {
-      color: #a5f3fc;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .footer {
-      padding: 44px 0 60px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .hero .panel:first-child {
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .hero aside.panel {
-      animation: fadeUp 0.8s ease 0.12s both;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes floatTag {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    @media (max-width: 860px) {
-      .hero-grid, .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerardo Verdad | Senior QA Automation Engineer</title>
+    <meta
+      name="description"
+      content="Senior QA Automation Engineer with 8+ years of experience in Playwright, TypeScript, Selenium, API testing, CI/CD, accessibility, distributed systems, and AI-assisted QA workflows."
+    />
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-2: #0b1325;
+        --panel: rgba(10, 19, 37, 0.72);
+        --card: rgba(15, 23, 42, 0.78);
+        --text: #f8fafc;
+        --muted: #cbd5e1;
+        --accent: #67e8f9;
+        --accent-2: #a78bfa;
+        --accent-3: #34d399;
+        --border: rgba(255, 255, 255, 0.1);
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.32);
+        --max: 1120px;
       }
 
-      .panel { padding: 24px; }
-      .stats { padding: 20px; }
-      .nav-inner { align-items: flex-start; flex-direction: column; }
-    }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        line-height: 1.6;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(103, 232, 249, 0.14),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(167, 139, 250, 0.14),
+            transparent 22%
+          ),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+          );
+        background-size: 34px 34px;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.5),
+          transparent 85%
+        );
+        z-index: -1;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(92%, var(--max));
+        margin: 0 auto;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(16px);
+        background: rgba(7, 17, 31, 0.65);
+        border-bottom: 1px solid var(--border);
+        z-index: 20;
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        gap: 16px;
+      }
+
+      .brand {
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        position: relative;
+      }
+
+      .brand::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transform: scaleX(0.45);
+        transform-origin: left;
+        opacity: 0.85;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        transition:
+          color 0.25s ease,
+          transform 0.25s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        padding: 84px 0 42px;
+        position: relative;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.45fr 0.95fr;
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .panel,
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+
+      .panel {
+        padding: 34px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before,
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(
+          135deg,
+          rgba(103, 232, 249, 0.35),
+          rgba(167, 139, 250, 0.18),
+          transparent 55%
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: rgba(103, 232, 249, 0.1);
+        color: #a5f3fc;
+        font-size: 0.84rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        border: 1px solid rgba(103, 232, 249, 0.18);
+        animation: floatTag 4s ease-in-out infinite;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.15;
+        margin: 0 0 12px;
+      }
+
+      h1 {
+        font-size: clamp(2.25rem, 5vw, 4.1rem);
+        letter-spacing: -0.03em;
+      }
+
+      h2 {
+        font-size: clamp(1.45rem, 3vw, 2rem);
+        margin-bottom: 18px;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+      }
+
+      .lead {
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 65ch;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        font-weight: 700;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), #93c5fd);
+        color: #082f49;
+        border-color: transparent;
+      }
+
+      .btn-secondary {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .btn-secondary:hover {
+        border-color: rgba(103, 232, 249, 0.35);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        padding: 24px;
+        position: relative;
+      }
+
+      .stat {
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 18px;
+        transition:
+          transform 0.28s ease,
+          border-color 0.28s ease,
+          background 0.28s ease;
+      }
+
+      .stat:hover,
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(103, 232, 249, 0.28);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.7rem;
+        margin-bottom: 4px;
       }
 
       section {
-        opacity: 1;
-        transform: none;
+        padding: 28px 0;
+        opacity: 0;
+        transform: translateY(28px);
+        animation: fadeUp 0.7s ease forwards;
       }
-    }
-  </style>
-</head>
-<body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <div class="brand">Gerardo Verdad</div>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#strengths">Strengths</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </nav>
 
-  <header class="hero">
-    <div class="container hero-grid">
-      <div class="panel">
-        <div class="eyebrow">Senior QA Automation Engineer · Test Automation Architect</div>
-        <h1>Designing scalable quality systems for modern web, API, and distributed platforms.</h1>
-        <p class="lead">
-          I’m Gerardo Verdad, a Senior QA Automation Engineer with 8+ years of experience building and modernizing
-          test automation frameworks across web applications, APIs, accessibility workflows, and CI/CD pipelines.
-          My work focuses on Playwright, TypeScript, Selenium, API validation, distributed systems, and AI-assisted
-          QA strategies that improve release confidence while reducing maintenance overhead.
+      section:nth-of-type(2) {
+        animation-delay: 0.08s;
+      }
+      section:nth-of-type(3) {
+        animation-delay: 0.16s;
+      }
+      section:nth-of-type(4) {
+        animation-delay: 0.24s;
+      }
+      section:nth-of-type(5) {
+        animation-delay: 0.32s;
+      }
+      section:nth-of-type(6) {
+        animation-delay: 0.4s;
+      }
+      section:nth-of-type(7) {
+        animation-delay: 0.48s;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .grid-2,
+      .grid-3 {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        padding: 22px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.28s ease,
+          border-color 0.28s ease,
+          background 0.28s ease,
+          box-shadow 0.28s ease;
+      }
+
+      .card::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        right: -60px;
+        top: -70px;
+        background: radial-gradient(
+          circle,
+          rgba(103, 232, 249, 0.14),
+          transparent 68%
+        );
+        pointer-events: none;
+      }
+
+      .item-meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+        margin-bottom: 10px;
+      }
+
+      ul.clean {
+        padding-left: 18px;
+        margin: 10px 0 0;
+      }
+
+      .tag-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tag {
+        padding: 9px 13px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .tag:hover {
+        transform: translateY(-2px);
+        border-color: rgba(167, 139, 250, 0.35);
+        color: var(--text);
+      }
+
+      .highlight {
+        color: #86efac;
+        font-weight: 700;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 18px;
+      }
+
+      .timeline .card {
+        padding: 24px;
+      }
+
+      .kicker {
+        color: #a5f3fc;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .footer {
+        padding: 44px 0 60px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .hero .panel:first-child {
+        animation: fadeUp 0.8s ease both;
+      }
+
+      .hero aside.panel {
+        animation: fadeUp 0.8s ease 0.12s both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes floatTag {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+      }
+
+      @media (max-width: 860px) {
+        .hero-grid,
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .panel {
+          padding: 24px;
+        }
+        .stats {
+          padding: 20px;
+        }
+        .nav-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+
+        section {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="container nav-inner">
+        <div class="brand">Gerardo Verdad</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#strengths">Strengths</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container hero-grid">
+        <div class="panel">
+          <div class="eyebrow">
+            Senior QA Automation Engineer · Test Automation Architect
+          </div>
+          <h1>
+            Designing scalable quality systems for modern web, API, and
+            distributed platforms.
+          </h1>
+          <p class="lead">
+            I’m Gerardo Verdad, a Senior QA Automation Engineer with 8+ years of
+            experience building and modernizing test automation frameworks
+            across web applications, APIs, accessibility workflows, and CI/CD
+            pipelines. My work focuses on Playwright, TypeScript, Selenium, API
+            validation, distributed systems, and AI-assisted QA strategies that
+            improve release confidence while reducing maintenance overhead.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:verdad.gerardo@gmail.com"
+              >Email Me</a
+            >
+            <a
+              class="btn btn-secondary"
+              href="https://www.linkedin.com/in/gerardo-verdad/"
+              target="_blank"
+              rel="noreferrer"
+              >LinkedIn</a
+            >
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/Verdanz"
+              target="_blank"
+              rel="noreferrer"
+              >GitHub</a
+            >
+            <a
+              class="btn btn-secondary"
+              href="./assets/resume/Gerardo-Verdad-Senior-QA-Automation-Engineer.pdf"
+              target="_blank"
+              rel="noreferrer"
+              download
+            >
+              Download Resume
+            </a>
+          </div>
+        </div>
+
+        <aside class="panel stats">
+          <div class="stat">
+            <strong>8+ Years</strong>
+            <span>Quality engineering and test automation experience</span>
+          </div>
+          <div class="stat">
+            <strong>800+ Tests</strong>
+            <span>UI and API tests automated across enterprise systems</span>
+          </div>
+          <div class="stat">
+            <strong>Playwright + TS</strong>
+            <span
+              >Modern framework design, architecture, and CI/CD
+              integration</span
+            >
+          </div>
+          <div class="stat">
+            <strong>AI-Assisted QA</strong>
+            <span
+              >LLM-supported test generation, validation, and defect
+              triage</span
+            >
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section id="about">
+        <div class="container">
+          <div class="section-head">
+            <h2>About</h2>
+          </div>
+          <div class="card">
+            <p>
+              I specialize in end-to-end quality engineering across UI, API,
+              integration, accessibility, and backend validation layers. I’ve
+              built and scaled automation solutions using Playwright,
+              TypeScript, Selenium, WebdriverIO, Ruby, and Node.js, while
+              supporting cloud-based and distributed environments with AWS,
+              Azure, SQL Server, DynamoDB, S3, SNS, and Kafka.
+            </p>
+            <p>
+              Beyond automation, I focus on strategy: improving test
+              architecture, defining standards, strengthening release readiness,
+              refining acceptance criteria, and helping teams move toward
+              quality-as-code practices that are scalable, maintainable, and
+              aligned with product goals.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="strengths">
+        <div class="container">
+          <div class="section-head">
+            <h2>Core Strengths</h2>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <div class="kicker">Automation Architecture</div>
+              <h3>Framework design that scales</h3>
+              <p>
+                I build reusable automation frameworks, utilities, and patterns
+                that support UI, API, and integration layers while reducing
+                maintenance cost and improving execution reliability.
+              </p>
+            </article>
+            <article class="card">
+              <div class="kicker">Quality Strategy</div>
+              <h3>Coverage with business impact</h3>
+              <p>
+                I align testing with product risk by combining regression
+                strategy, exploratory testing, accessibility, defect triage, and
+                release readiness assessments.
+              </p>
+            </article>
+            <article class="card">
+              <div class="kicker">AI-Augmented QA</div>
+              <h3>Faster validation and smarter discovery</h3>
+              <p>
+                I use LLM-assisted workflows to generate test ideas, expand
+                edge-case coverage, validate outputs, and improve the speed and
+                clarity of bug investigation.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience">
+        <div class="container">
+          <div class="section-head">
+            <h2>Experience</h2>
+          </div>
+
+          <div class="timeline">
+            <article class="card">
+              <h3>Automation QA · Prodware Solutions</h3>
+              <div class="item-meta">Remote · Feb 2025 – Feb 2026</div>
+              <ul class="clean">
+                <li>
+                  Architected and maintained automated solutions using
+                  Playwright, WebdriverIO, and TypeScript for large-scale React
+                  applications.
+                </li>
+                <li>
+                  Designed API validation strategies with Swagger and Postman to
+                  verify contracts, integrations, and business-critical flows.
+                </li>
+                <li>
+                  Validated data across APIs and databases including Azure SQL
+                  and DynamoDB to strengthen backend reliability.
+                </li>
+                <li>
+                  Integrated automation into GitHub Actions pipelines to deliver
+                  continuous quality feedback and scalable execution.
+                </li>
+                <li>
+                  Applied AI-assisted QA techniques to improve scenario
+                  discovery, defect triage, and long-term framework efficiency.
+                </li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Automation Tester · FedTec</h3>
+              <div class="item-meta">Remote · Feb 2024 – Feb 2025</div>
+              <ul class="clean">
+                <li>
+                  Developed and maintained automation coverage for UI, API, and
+                  Section 508 accessibility testing in React-based applications.
+                </li>
+                <li>
+                  Combined manual and automated execution to strengthen
+                  real-user validation and exploratory coverage.
+                </li>
+                <li>
+                  Integrated framework execution and reporting into GitHub
+                  Actions CI/CD workflows.
+                </li>
+                <li>
+                  Produced detailed QA reports and stakeholder-facing insights
+                  to improve visibility and decision-making.
+                </li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Tech Lead QA Automation Engineer · Maswer</h3>
+              <div class="item-meta">Remote · Sep 2023 – Apr 2024</div>
+              <ul class="clean">
+                <li>
+                  Led the modernization of a legacy Ruby/Selenium/Cucumber
+                  framework into a more scalable Playwright + TypeScript
+                  direction.
+                </li>
+                <li>
+                  Defined framework standards, reusable patterns, and
+                  maintainability improvements for long-term adoption.
+                </li>
+                <li>
+                  Coordinated QA efforts across distributed teams and helped
+                  standardize reporting and delivery practices.
+                </li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Lead QA Automation Engineer · Infectious Disease Connect</h3>
+              <div class="item-meta">Dallas, TX · Jan 2022 – Mar 2023</div>
+              <ul class="clean">
+                <li>
+                  Built Playwright + Node.js automation frameworks with Allure
+                  reporting for web services and API validation.
+                </li>
+                <li>
+                  Integrated automated testing into Azure DevOps pipelines to
+                  support continuous delivery.
+                </li>
+                <li>
+                  Validated complex workflows involving APIs, backend services,
+                  and data-driven business logic.
+                </li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>QA Automation Engineer / SDET · CBQA Solutions</h3>
+              <div class="item-meta">León, Mexico · Jul 2018 – Dec 2021</div>
+              <ul class="clean">
+                <li>
+                  Developed frameworks using Selenium, Playwright, Puppeteer,
+                  Java, JavaScript, and TypeScript.
+                </li>
+                <li>
+                  Automated 800+ UI and API test cases, significantly improving
+                  regression coverage and release confidence.
+                </li>
+                <li>
+                  Validated backend and distributed systems including AWS
+                  Lambda, DynamoDB, S3, SNS, and Kafka.
+                </li>
+                <li>
+                  Led and mentored QA engineers while improving testing quality
+                  and delivery timelines.
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container">
+          <div class="section-head">
+            <h2>Featured Work</h2>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <h3>Modern Playwright Framework Architecture</h3>
+              <p>
+                Designed scalable Playwright + TypeScript automation foundations
+                with reusable helpers, layered validation, better
+                maintainability, and reporting support for enterprise web apps.
+              </p>
+              <p class="highlight">
+                Playwright · TypeScript · reusable architecture ·
+                maintainability
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>CI/CD Quality Gate Integration</h3>
+              <p>
+                Embedded automation into GitHub Actions and Azure pipelines with
+                reporting, artifacts, and continuous feedback loops to support
+                safer releases.
+              </p>
+              <p class="highlight">
+                GitHub Actions · Azure Pipelines · quality gates · reporting
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>AI-Assisted QA Workflow Design</h3>
+              <p>
+                Applied LLM-assisted approaches to generate test ideas, refine
+                acceptance criteria, improve defect documentation, and expand
+                scenario coverage beyond standard scripted testing.
+              </p>
+              <p class="highlight">
+                LLMs · exploratory testing · defect triage · coverage expansion
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <div class="section-head">
+            <h2>Skills</h2>
+          </div>
+          <div class="card tag-wrap">
+            <span class="tag">Playwright</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Ruby</span>
+            <span class="tag">Python</span>
+            <span class="tag">Selenium WebDriver</span>
+            <span class="tag">WebdriverIO</span>
+            <span class="tag">Puppeteer</span>
+            <span class="tag">API Testing</span>
+            <span class="tag">Swagger</span>
+            <span class="tag">Postman</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Azure Pipelines</span>
+            <span class="tag">Jenkins</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Docker Compose</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Azure</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">Azure SQL</span>
+            <span class="tag">DynamoDB</span>
+            <span class="tag">S3</span>
+            <span class="tag">SNS</span>
+            <span class="tag">Kafka</span>
+            <span class="tag">Accessibility Testing</span>
+            <span class="tag">Section 508</span>
+            <span class="tag">Allure Reporting</span>
+            <span class="tag">Exploratory Testing</span>
+            <span class="tag">Adversarial Testing</span>
+            <span class="tag">Release Readiness</span>
+            <span class="tag">AI-Assisted QA</span>
+            <span class="tag">LLM-Based Test Generation</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="section-head">
+            <h2>Contact</h2>
+          </div>
+          <div class="card">
+            <p>
+              <strong>Email:</strong>
+              <a href="mailto:verdad.gerardo@gmail.com"
+                >verdad.gerardo@gmail.com</a
+              >
+            </p>
+            <p><strong>Location:</strong> Crowley, Texas</p>
+            <p>
+              <strong>LinkedIn:</strong>
+              <a
+                href="https://www.linkedin.com/in/gerardo-verdad/"
+                target="_blank"
+                rel="noreferrer"
+                >linkedin.com/in/gerardo-verdad</a
+              >
+            </p>
+            <p>
+              <strong>GitHub:</strong>
+              <a
+                href="https://github.com/Verdanz"
+                target="_blank"
+                rel="noreferrer"
+                >github.com/Verdanz</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>
+          © 2026 Gerardo Verdad. Built with HTML/CSS and hosted on GitHub Pages.
         </p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="mailto:verdad.gerardo@gmail.com">Email Me</a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/gerardo-verdad/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="btn btn-secondary" href="https://github.com/Verdanz" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn btn-secondary" href="/Gerardo-Resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
-        </div>
       </div>
-
-      <aside class="panel stats">
-        <div class="stat">
-          <strong>8+ Years</strong>
-          <span>Quality engineering and test automation experience</span>
-        </div>
-        <div class="stat">
-          <strong>800+ Tests</strong>
-          <span>UI and API tests automated across enterprise systems</span>
-        </div>
-        <div class="stat">
-          <strong>Playwright + TS</strong>
-          <span>Modern framework design, architecture, and CI/CD integration</span>
-        </div>
-        <div class="stat">
-          <strong>AI-Assisted QA</strong>
-          <span>LLM-supported test generation, validation, and defect triage</span>
-        </div>
-      </aside>
-    </div>
-  </header>
-
-  <main>
-    <section id="about">
-      <div class="container">
-        <div class="section-head">
-          <h2>About</h2>
-        </div>
-        <div class="card">
-          <p>
-            I specialize in end-to-end quality engineering across UI, API, integration, accessibility,
-            and backend validation layers. I’ve built and scaled automation solutions using Playwright,
-            TypeScript, Selenium, WebdriverIO, Ruby, and Node.js, while supporting cloud-based and
-            distributed environments with AWS, Azure, SQL Server, DynamoDB, S3, SNS, and Kafka.
-          </p>
-          <p>
-            Beyond automation, I focus on strategy: improving test architecture, defining standards,
-            strengthening release readiness, refining acceptance criteria, and helping teams move toward
-            quality-as-code practices that are scalable, maintainable, and aligned with product goals.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="strengths">
-      <div class="container">
-        <div class="section-head">
-          <h2>Core Strengths</h2>
-        </div>
-        <div class="grid-3">
-          <article class="card">
-            <div class="kicker">Automation Architecture</div>
-            <h3>Framework design that scales</h3>
-            <p>
-              I build reusable automation frameworks, utilities, and patterns that support UI, API, and
-              integration layers while reducing maintenance cost and improving execution reliability.
-            </p>
-          </article>
-          <article class="card">
-            <div class="kicker">Quality Strategy</div>
-            <h3>Coverage with business impact</h3>
-            <p>
-              I align testing with product risk by combining regression strategy, exploratory testing,
-              accessibility, defect triage, and release readiness assessments.
-            </p>
-          </article>
-          <article class="card">
-            <div class="kicker">AI-Augmented QA</div>
-            <h3>Faster validation and smarter discovery</h3>
-            <p>
-              I use LLM-assisted workflows to generate test ideas, expand edge-case coverage, validate
-              outputs, and improve the speed and clarity of bug investigation.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <div class="container">
-        <div class="section-head">
-          <h2>Experience</h2>
-        </div>
-
-        <div class="timeline">
-          <article class="card">
-            <h3>Automation QA · Prodware Solutions</h3>
-            <div class="item-meta">Remote · Feb 2025 – Feb 2026</div>
-            <ul class="clean">
-              <li>Architected and maintained automated solutions using Playwright, WebdriverIO, and TypeScript for large-scale React applications.</li>
-              <li>Designed API validation strategies with Swagger and Postman to verify contracts, integrations, and business-critical flows.</li>
-              <li>Validated data across APIs and databases including Azure SQL and DynamoDB to strengthen backend reliability.</li>
-              <li>Integrated automation into GitHub Actions pipelines to deliver continuous quality feedback and scalable execution.</li>
-              <li>Applied AI-assisted QA techniques to improve scenario discovery, defect triage, and long-term framework efficiency.</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <h3>Automation Tester · FedTec</h3>
-            <div class="item-meta">Remote · Feb 2024 – Feb 2025</div>
-            <ul class="clean">
-              <li>Developed and maintained automation coverage for UI, API, and Section 508 accessibility testing in React-based applications.</li>
-              <li>Combined manual and automated execution to strengthen real-user validation and exploratory coverage.</li>
-              <li>Integrated framework execution and reporting into GitHub Actions CI/CD workflows.</li>
-              <li>Produced detailed QA reports and stakeholder-facing insights to improve visibility and decision-making.</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <h3>Tech Lead QA Automation Engineer · Maswer</h3>
-            <div class="item-meta">Remote · Sep 2023 – Apr 2024</div>
-            <ul class="clean">
-              <li>Led the modernization of a legacy Ruby/Selenium/Cucumber framework into a more scalable Playwright + TypeScript direction.</li>
-              <li>Defined framework standards, reusable patterns, and maintainability improvements for long-term adoption.</li>
-              <li>Coordinated QA efforts across distributed teams and helped standardize reporting and delivery practices.</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <h3>Lead QA Automation Engineer · Infectious Disease Connect</h3>
-            <div class="item-meta">Dallas, TX · Jan 2022 – Mar 2023</div>
-            <ul class="clean">
-              <li>Built Playwright + Node.js automation frameworks with Allure reporting for web services and API validation.</li>
-              <li>Integrated automated testing into Azure DevOps pipelines to support continuous delivery.</li>
-              <li>Validated complex workflows involving APIs, backend services, and data-driven business logic.</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <h3>QA Automation Engineer / SDET · CBQA Solutions</h3>
-            <div class="item-meta">León, Mexico · Jul 2018 – Dec 2021</div>
-            <ul class="clean">
-              <li>Developed frameworks using Selenium, Playwright, Puppeteer, Java, JavaScript, and TypeScript.</li>
-              <li>Automated 800+ UI and API test cases, significantly improving regression coverage and release confidence.</li>
-              <li>Validated backend and distributed systems including AWS Lambda, DynamoDB, S3, SNS, and Kafka.</li>
-              <li>Led and mentored QA engineers while improving testing quality and delivery timelines.</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="container">
-        <div class="section-head">
-          <h2>Featured Work</h2>
-        </div>
-        <div class="grid-3">
-          <article class="card">
-            <h3>Modern Playwright Framework Architecture</h3>
-            <p>
-              Designed scalable Playwright + TypeScript automation foundations with reusable helpers,
-              layered validation, better maintainability, and reporting support for enterprise web apps.
-            </p>
-            <p class="highlight">Playwright · TypeScript · reusable architecture · maintainability</p>
-          </article>
-
-          <article class="card">
-            <h3>CI/CD Quality Gate Integration</h3>
-            <p>
-              Embedded automation into GitHub Actions and Azure pipelines with reporting, artifacts,
-              and continuous feedback loops to support safer releases.
-            </p>
-            <p class="highlight">GitHub Actions · Azure Pipelines · quality gates · reporting</p>
-          </article>
-
-          <article class="card">
-            <h3>AI-Assisted QA Workflow Design</h3>
-            <p>
-              Applied LLM-assisted approaches to generate test ideas, refine acceptance criteria,
-              improve defect documentation, and expand scenario coverage beyond standard scripted testing.
-            </p>
-            <p class="highlight">LLMs · exploratory testing · defect triage · coverage expansion</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-head">
-          <h2>Skills</h2>
-        </div>
-        <div class="card tag-wrap">
-          <span class="tag">Playwright</span>
-          <span class="tag">TypeScript</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">Ruby</span>
-          <span class="tag">Python</span>
-          <span class="tag">Selenium WebDriver</span>
-          <span class="tag">WebdriverIO</span>
-          <span class="tag">Puppeteer</span>
-          <span class="tag">API Testing</span>
-          <span class="tag">Swagger</span>
-          <span class="tag">Postman</span>
-          <span class="tag">CI/CD</span>
-          <span class="tag">GitHub Actions</span>
-          <span class="tag">Azure Pipelines</span>
-          <span class="tag">Jenkins</span>
-          <span class="tag">Docker</span>
-          <span class="tag">Docker Compose</span>
-          <span class="tag">AWS</span>
-          <span class="tag">Azure</span>
-          <span class="tag">SQL Server</span>
-          <span class="tag">Azure SQL</span>
-          <span class="tag">DynamoDB</span>
-          <span class="tag">S3</span>
-          <span class="tag">SNS</span>
-          <span class="tag">Kafka</span>
-          <span class="tag">Accessibility Testing</span>
-          <span class="tag">Section 508</span>
-          <span class="tag">Allure Reporting</span>
-          <span class="tag">Exploratory Testing</span>
-          <span class="tag">Adversarial Testing</span>
-          <span class="tag">Release Readiness</span>
-          <span class="tag">AI-Assisted QA</span>
-          <span class="tag">LLM-Based Test Generation</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-        </div>
-        <div class="card">
-          <p><strong>Email:</strong> <a href="mailto:verdad.gerardo@gmail.com">verdad.gerardo@gmail.com</a></p>
-          <p><strong>Location:</strong> Crowley, Texas</p>
-          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gerardo-verdad/" target="_blank" rel="noreferrer">linkedin.com/in/gerardo-verdad</a></p>
-          <p><strong>GitHub:</strong> <a href="https://github.com/Verdanz" target="_blank" rel="noreferrer">github.com/Verdanz</a></p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Gerardo Verdad. Built with HTML/CSS and hosted on GitHub Pages.</p>
-    </div>
-  </footer>
-</body>
+    </footer>
+  </body>
 </html>
